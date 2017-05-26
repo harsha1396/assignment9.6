@@ -1,0 +1,19 @@
+1)Minimum temperature observed in a given weather station in a particular year:-
+
+temp = load '/user/acadgild/Temperature.csv' using PigStorage(',') as (station:chararray, dateofobs:int, obs:chararray, temperature:int);
+filtereddata = FILTER temp by obs == 'TMIN';
+groupeddata = GROUP filtereddata by station;
+mintemp = FOREACH groupeddata generate (group,MIN(temp.filtereddata));
+
+2)Maximum temperature observed in a given weather station in a particular year:-
+
+temp = load '/user/acadgild/Temperature.csv' using PigStorage(',') as (station:chararray, dateofobs:int, obs:chararray, temperature:int);
+filtereddata = FILTER temp by obs == 'TMAX';
+groupeddata = GROUP filtereddata by station;
+maxtemp = FOREACH groupeddata generate (group,MAX(temp.filtereddata));
+
+3)Number of readings given by each weather station according to the dataset:-
+
+temp = load '/user/acadgild/Temperature.csv' using PigStorage(',') as (station:chararray, dateofobs:int, obs:chararray, temperature:int);
+tempdata = GROUP temp by station;
+counteddata = FOREACH tempdata generate (group,COUNT(temp.obs));
